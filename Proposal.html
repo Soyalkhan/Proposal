@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OneLife HealthCare - Website Redesign Proposal</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: OneLife Vitality (Primary: Teal-700, Accent: Emerald-500, Background: Slate-50, Text: Slate-800, Subtle Accents: Teal-100/Slate-200) -->
+
+    <!-- Application Structure Plan: A formal "Website Redesign Proposal" document structure, presented as a single-page interactive web application. The user flow is linear, guiding the user through standard proposal sections: Executive Summary, Understanding Your Vision, Our Proposed Solution (detailed into SEO, Templates, Visual Overhaul), Projected Impact, Methodology, Timeline, Investment, About Delhi Digital Co., and Next Steps. A sticky sidebar acts as a "Table of Contents," allowing quick navigation between sections. Interactive elements (flip cards, selectors, charts) are embedded within relevant sections to enhance understanding and engagement without breaking the document flow. This structure provides the familiarity of a traditional proposal while leveraging web interactivity for clarity and impact. -->
+
+    <!-- Visualization & Content Choices: 1. Executive Summary: Concise text (HTML/CSS). Goal: Quick overview. 2. Understanding Your Vision: Text and cards (HTML/CSS) to align with client goals. Goal: Empathy & Alignment. 3. Our Proposed Solution: This is the core.
+
+        - SEO & Discoverability: Detailed text, and a conceptual "SEO Funnel" (HTML/CSS/JS) to illustrate the process. Goal: Explain process & strategy.
+
+        - Service-Centric Templates: Detailed text with interactive "flip cards" (HTML/CSS/JS) for each service type. Goal: Demonstrate concept & detail.
+
+        - Holistic Visual Overhaul: Detailed text with a conceptual "Theme Previewer" (HTML/JS) to show visual impact. Goal: Illustrate design principles.
+
+    4. Projected Impact: Chart.js bar chart with detailed text breakdown. Goal: Quantify ROI.
+
+    5. Methodology: Step-by-step process (HTML/CSS list). Goal: Transparency.
+
+    6. Timeline: Conceptual phases (HTML/CSS list). Goal: Set expectations.
+
+    7. Investment: Placeholder text (HTML/CSS). Goal: Outline commercial terms.
+
+    8. About Delhi Digital Co.: Text and mission statement (HTML/CSS). Goal: Build credibility.
+
+    9. Next Steps: Clear call to action (HTML/CSS). Goal: Guide client.
+
+    All elements are designed to be responsive, visually appealing, and avoid SVG/Mermaid, relying on native HTML/CSS/JS and Chart.js for all graphics and interactions. -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            overflow-x: hidden; /* Prevent horizontal scroll */
+
+            background-image: radial-gradient(#e2e8f0 0.5px, transparent 0.5px);
+
+            background-size: 15px 15px;
+
+        }
+
+        .chart-container {
+
+            position: relative;
+
+            width: 100%;
+
+            max-width: 700px;
+
+            margin-left: auto;
+
+            margin-right: auto;
+
+            height: 350px;
+
+            max-height: 450px;
+
+        }
+
+        @media (min-width: 768px) {
+
+            .chart-container {
+
+                height: 400px;
+
+            }
+
+        }
+
+        .nav-active {
+
+            background-color: #0d9488; /* Teal-700 */
+
+            color: #ffffff;
+
+            font-weight: 600;
+
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+        }
+
+        .nav-btn:hover {
+
+            background-color: #14b8a6; /* Teal-500 */
+
+            color: #ffffff;
+
+        }
+
+        .accordion-header {
+
+            cursor: pointer;
+
+            transition: background-color 0.3s ease;
+
+        }
+
+        .accordion-header:hover {
+
+            background-color: #e0f2f7; /* Light blue-gray for hover */
+
+        }
+
+        .accordion-content {
+
+            max-height: 0;
+
+            overflow: hidden;
+
+            transition: max-height 0.3s ease-out;
+
+        }
+
+        .accordion-content.open {
+
+            max-height: 500px; /* Adjust based on max content height */
+
+            transition: max-height 0.5s ease-in;
+
+        }
+
+        .service-card {
+
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+        }
+
+        .service-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+        }
+
+        .template-card-inner {
+
+            transition: transform 0.6s;
+
+            transform-style: preserve-3d;
+
+        }
+
+        .template-card:hover .template-card-inner {
+
+            transform: rotateY(180deg);
+
+        }
+
+        .card-front, .card-back {
+
+            -webkit-backface-visibility: hidden;
+
+            backface-visibility: hidden;
+
+            position: absolute;
+
+            width: 100%;
+
+            height: 100%;
+
+            top: 0;
+
+            left: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 1rem;
+
+            border-radius: 0.75rem;
+
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+        }
+
+        .card-back {
+
+            transform: rotateY(180deg);
+
+            background-color: #f0fdfa; /* Teal-50 */
+
+            color: #334155; /* Slate-700 */
+
+            text-align: left;
+
+            justify-content: flex-start;
+
+            padding-left: 2rem;
+
+        }
+
+        .seo-funnel-step {
+
+            position: relative;
+
+            background-color: #f0fdfa;
+
+            padding: 1rem;
+
+            border-radius: 0.5rem;
+
+            margin-bottom: 1rem;
+
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 1rem;
+
+            opacity: 0;
+
+            transform: translateY(20px);
+
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+        }
+
+        .seo-funnel-step.animate-in {
+
+            opacity: 1;
+
+            transform: translateY(0);
+
+        }
+
+        .seo-funnel-step:not(:last-child)::after {
+
+            content: '▼';
+
+            position: absolute;
+
+            bottom: -1.5rem;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            color: #6ee7b7; /* Teal-300 */
+
+            font-size: 1.5rem;
+
+        }
+
+        .theme-preview {
+
+            width: 100%;
+
+            height: 150px;
+
+            border-radius: 0.75rem;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 600;
+
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+            border: 2px solid transparent; /* Added for visual distinction */
+
+        }
+
+        /* Scroll-reveal animation for sections */
+
+        .section-reveal {
+
+            opacity: 0;
+
+            transform: translateY(30px);
+
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+        }
+
+        .section-reveal.animate-in {
+
+            opacity: 1;
+
+            transform: translateY(0);
+
+        }
+
+        /* Header animations */
+
+        @keyframes fadeInDown {
+
+            from { opacity: 0; transform: translateY(-20px); }
+
+            to { opacity: 1; transform: translateY(0); }
+
+        }
+
+        @keyframes fadeInUp {
+
+            from { opacity: 0; transform: translateY(20px); }
+
+            to { opacity: 1; transform: translateY(0); }
+
+        }
+
+        .animate-fade-in-down {
+
+            animation: fadeInDown 1s ease-out forwards;
+
+        }
+
+        .animate-fade-in-up {
+
+            animation: fadeInUp 1s ease-out forwards;
+
+        }
+
+    </style>
+
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+
+
+    <div class="min-h-screen flex flex-col">
+
+        <!-- Header Section -->
+
+        <header class="bg-gradient-to-r from-teal-700 to-emerald-600 text-white py-12 text-center shadow-lg">
+
+            <div class="container mx-auto px-4">
+
+                <h1 class="text-4xl md:text-5xl font-extrabold leading-tight animate-fade-in-down">
+
+                    Website Redesign Proposal
+
+                </h1>
+
+                <p class="mt-3 text-lg md:text-xl max-w-3xl mx-auto animate-fade-in-up" style="animation-delay: 0.3s;">
+
+                    For OneLife HealthCare, by <strong class="font-bold">Delhi Digital Co.</strong>
+
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- Main Content Area with Sidebar Navigation -->
+
+        <div class="flex flex-grow flex-col lg:flex-row container mx-auto px-4 sm:px-6 lg:px-8 py-12 gap-8">
+
+            <!-- Sidebar Navigation (Table of Contents) -->
+
+            <aside class="lg:w-1/4 bg-white p-6 rounded-xl shadow-lg border border-slate-200 lg:sticky lg:top-8 lg:self-start h-fit">
+
+                <h2 class="text-2xl font-bold text-teal-700 mb-6">Proposal Sections</h2>
+
+                <nav class="flex flex-col space-y-3">
+
+                    <a href="#executive-summary" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200 nav-active">
+
+                        <span class="text-2xl">&#128220;</span> Executive Summary
+
+                    </a>
+
+                    <a href="#understanding-vision" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200">
+
+                        <span class="text-2xl">&#128065;&#xFE0F;</span> Understanding Your Vision
+
+                    </a>
+
+                    <a href="#proposed-solution" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200">
+
+                        <span class="text-2xl">&#128161;</span> Our Proposed Solution
+
+                    </a>
+
+                    <a href="#projected-impact" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200">
+
+                        <span class="text-2xl">&#128176;</span> Projected Impact & ROI
+
+                    </a>
+
+                    <a href="#methodology" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200">
+
+                        <span class="text-2xl">&#128736;&#xFE0F;</span> Methodology & Process
+
+                    </a>
+
+                    <a href="#timeline" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200">
+
+                        <span class="text-2xl">&#128197;</span> Project Timeline
+
+                    </a>
+
+                    <a href="#investment" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200">
+
+                        <span class="text-2xl">&#128181;</span> Investment Details
+
+                    </a>
+
+                    <a href="#about-us" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200">
+
+                        <span class="text-2xl">&#127970;</span> About Delhi Digital Co.
+
+                    </a>
+
+                    <a href="#next-steps" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 text-lg transition-colors duration-200">
+
+                        <span class="text-2xl">&#128073;</span> Next Steps
+
+                    </a>
+
+                </nav>
+
+            </aside>
+
+
+
+            <!-- Main Content Sections -->
+
+            <section id="proposal-content" class="lg:w-3/4">
+
+
+
+                <!-- 1. Executive Summary -->
+
+                <div id="executive-summary" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">1. Executive Summary</h2>
+
+                    <p class="text-slate-600 leading-relaxed">Delhi Digital Co. proposes a comprehensive redesign of the OneLife HealthCare website. Our goal is to transform it into a modern, interactive, and conversion-optimized platform. We will enhance user experience, boost online visibility through advanced SEO, and establish OneLife as the premier at-home medical service provider in Dubai. This revamp is projected to significantly increase client leads, organic traffic, and brand authority, ensuring a strong return on your investment.</p>
+
+                </div>
+
+
+
+                <!-- 2. Understanding Your Vision -->
+
+                <div id="understanding-vision" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">2. Understanding Your Vision</h2>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">We align with OneLife HealthCare's vision for an SEO-friendly site, distinct product templates, and a complete visual overhaul. Our proposal is designed to exceed these expectations, creating a digital experience that reflects your brand's excellence.</p>
+
+                    
+
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+
+                        <div class="bg-teal-50 p-8 rounded-xl shadow-sm border border-teal-100 service-card">
+
+                            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 text-teal-600 mb-4 text-3xl">
+
+                                <span>&#x2705;</span>
+
+                            </div>
+
+                            <h3 class="text-xl font-semibold mb-2 text-teal-700">SEO-Driven Growth</h3>
+
+                            <p class="text-slate-600">Attract more organic traffic and new clients.</p>
+
+                        </div>
+
+                        <div class="bg-teal-50 p-8 rounded-xl shadow-sm border border-teal-100 service-card">
+
+                            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 text-teal-600 mb-4 text-3xl">
+
+                                <span>&#128193;</span>
+
+                            </div>
+
+                            <h3 class="text-xl font-semibold mb-2 text-teal-700">Tailored Service Presentation</h3>
+
+                            <p class="text-slate-600">Showcase each service with dedicated, conversion-focused templates.</p>
+
+                        </div>
+
+                        <div class="bg-teal-50 p-8 rounded-xl shadow-sm border border-teal-100 service-card">
+
+                            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 text-teal-600 mb-4 text-3xl">
+
+                                <span>&#127760;</span>
+
+                            </div>
+
+                            <h3 class="text-xl font-semibold mb-2 text-teal-700">Cutting-Edge Visuals</h3>
+
+                            <p class="text-slate-600">Deliver a modern, intuitive, and visually stunning user experience.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- 3. Our Proposed Solution -->
+
+                <div id="proposed-solution" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">3. Our Proposed Solution: The Journey Hub</h2>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">Our solution is a single-page interactive web application, the "OneLife Journey Hub." This innovative design offers a guided, explorative user experience with a sticky sidebar for seamless navigation and dynamic content modules for each service. This ensures intuitive content discovery and deep engagement.</p>
+
+
+
+                    <!-- 3.1 SEO & Discoverability -->
+
+                    <h3 class="text-2xl font-bold text-teal-700 mb-4 mt-8">3.1 SEO & Discoverability: Building for Maximum Reach</h3>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">We'll ensure your website ranks prominently on search engines. Our robust SEO strategy guides users from search query to conversion, making OneLife HealthCare their top result:</p>
+
+                    
+
+                    <div class="flex flex-col items-center justify-center my-8">
+
+                        <div class="seo-funnel-step w-full max-w-md" style="animation-delay: 0s;">
+
+                            <span class="text-teal-500 text-2xl">&#128269;</span>
+
+                            <div class="flex-1">
+
+                                <h4 class="font-semibold text-slate-800">Search Query</h4>
+
+                                <p class="text-slate-600 text-sm">Patient searches for "home doctor Dubai"</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="seo-funnel-step w-full max-w-md" style="animation-delay: 0.2s;">
+
+                            <span class="text-teal-500 text-2xl">&#128187;</span>
+
+                            <div class="flex-1">
+
+                                <h4 class="font-semibold text-slate-800">High Ranking & Click</h4>
+
+                                <p class="text-slate-600 text-sm">Your website appears at the top</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="seo-funnel-step w-full max-w-md" style="animation-delay: 0.4s;">
+
+                            <span class="text-teal-500 text-2xl">&#128100;</span>
+
+                            <div class="flex-1">
+
+                                <h4 class="font-semibold text-slate-800">Engaging Content</h4>
+
+                                <p class="text-slate-600 text-sm">User finds relevant services</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="seo-funnel-step w-full max-w-md" style="animation-delay: 0.6s;">
+
+                            <span class="text-teal-500 text-2xl">&#128196;</span>
+
+                            <div class="flex-1">
+
+                                <h4 class="font-semibold text-slate-800">Appointment Booked</h4>
+
+                                <p class="text-slate-600 text-sm">Clear call-to-action leads to booking</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <ul class="space-y-4 max-w-2xl mx-auto text-slate-700">
+
+                        <li class="flex items-start">
+
+                            <span class="text-teal-500 mr-3 mt-1">&#10003;</span>
+
+                            <div><strong class="text-slate-800">Strategic Keyword Integration:</strong> In-depth research and natural integration of high-value keywords for improved organic search rankings.</div>
+
+                        </li>
+
+                        <li class="flex items-start">
+
+                            <span class="text-teal-500 mr-3 mt-1">&#10003;</span>
+
+                            <div><strong class="text-slate-800">Technical SEO Excellence:</strong> Optimizing for fast load speeds, mobile-first responsiveness, secure protocols, and a clean site structure.</div>
+
+                        </li>
+
+                        <li class="flex items-start">
+
+                           <span class="text-teal-500 mr-3 mt-1">&#10003;</span>
+
+                            <div><strong class="text-slate-800">Authority-Building Content:</strong> A new blog section with expert articles to establish OneLife as a thought leader.</div>
+
+                        </li>
+
+                        <li class="flex items-start">
+
+                           <span class="text-teal-500 mr-3 mt-1">&#10003;</span>
+
+                            <div><strong class="text-slate-800">Local SEO Optimization:</strong> Enhancing Google My Business and online directories for local patient attraction.</div>
+
+                        </li>
+
+                    </ul>
+
+
+
+                    <!-- 3.2 Different Template for Products (Service-Centric Modules) -->
+
+                    <h3 class="text-2xl font-bold text-teal-700 mb-4 mt-12">3.2 Service-Centric Templates: Designed for Conversion</h3>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">Each service will have a unique, compelling module within the Journey Hub to maximize bookings. Hover over the cards to preview tailored approaches:</p>
+
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        
+
+                        <div class="template-card h-56 w-full [perspective:1000px]">
+
+                            <div class="template-card-inner relative h-full w-full rounded-lg shadow-xl">
+
+                                <div class="card-front bg-teal-600 text-white">
+
+                                    <h4 class="font-bold text-xl mb-2">Home Visit Doctor</h4>
+
+                                    <p class="text-sm text-teal-100">Hover for Features</p>
+
+                                    <span class="mt-4 text-5xl">&#128104;&#x200D;&#x2695;&#xFE0F;</span>
+
+                                </div>
+
+                                <div class="card-back">
+
+                                    <h4 class="font-semibold text-lg mb-2 text-teal-700">Key Template Features:</h4>
+
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+
+                                        <li>Intuitive Booking Form</li>
+
+                                        <li>24/7 Availability Highlight</li>
+
+                                        <li>DHA Licensed Doctor Profiles</li>
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="template-card h-56 w-full [perspective:1000px]">
+
+                            <div class="template-card-inner relative h-full w-full rounded-lg shadow-xl">
+
+                                <div class="card-front bg-teal-700 text-white">
+
+                                    <h4 class="font-bold text-xl mb-2">IV Drips & Therapy</h4>
+
+                                    <p class="text-sm text-teal-100">Hover for Features</p>
+
+                                    <span class="mt-4 text-5xl">&#128137;</span>
+
+                                </div>
+
+                                <div class="card-back">
+
+                                    <h4 class="font-semibold text-lg mb-2 text-teal-700">Key Template Features:</h4>
+
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+
+                                        <li>Clear Drip Descriptions & Benefits</li>
+
+                                        <li>Transparent Pricing & Packages</li>
+
+                                        <li>Direct "Book Now" CTA</li>
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="template-card h-56 w-full [perspective:1000px]">
+
+                            <div class="template-card-inner relative h-full w-full rounded-lg shadow-xl">
+
+                                <div class="card-front bg-teal-800 text-white">
+
+                                    <h4 class="font-bold text-xl mb-2">Specialized Nursing Care</h4>
+
+                                    <p class="text-sm text-teal-100">Hover for Features</p>
+
+                                    <span class="mt-4 text-5xl">&#128138;</span>
+
+                                </div>
+
+                                <div class="card-back">
+
+                                    <h4 class="font-semibold text-lg mb-2 text-teal-700">Key Template Features:</h4>
+
+                                   <ul class="list-disc list-inside space-y-1 text-slate-700">
+
+                                        <li>Detailed Care Type Breakdowns</li>
+
+                                        <li>Compassionate Imagery</li>
+
+                                        <li>Patient Success Stories</li>
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <p class="text-slate-600 mt-8 leading-relaxed">Dedicated modules for **Lab Tests at Home** and **Physiotherapy** will also be developed, each designed to highlight specific benefits and streamline booking.</p>
+
+
+
+                    <!-- 3.3 Complete Visual Overhaul -->
+
+                    <h3 class="text-2xl font-bold text-teal-700 mb-4 mt-12">3.3 Holistic Visual Overhaul: Trust Through Design</h3>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">A complete visual transformation will align your website's aesthetics with your high-quality medical care. This creates an intuitive, reassuring, and memorable user experience. Conceptualize the impact of different themes below:</p>
+
+                    
+
+                    <div class="flex justify-center mb-8 space-x-4">
+
+                        <button class="theme-btn bg-teal-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-teal-700 transition-colors duration-200" data-theme="teal">Teal Theme</button>
+
+                        <button class="theme-btn bg-blue-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-700 transition-colors duration-200" data-theme="blue">Blue Theme</button>
+
+                        <button class="theme-btn bg-purple-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-purple-700 transition-colors duration-200" data-theme="purple">Purple Theme</button>
+
+                    </div>
+
+
+
+                    <div id="theme-preview" class="theme-preview bg-teal-100 text-teal-800">
+
+                        <p class="text-lg">This is a preview of the Teal Theme.</p>
+
+                    </div>
+
+
+
+                    <div class="mt-12 space-y-6 max-w-2xl mx-auto">
+
+                        <div class="p-6 bg-slate-100 rounded-lg shadow-sm">
+
+                            <h4 class="font-bold text-xl text-slate-800 mb-2">The Visual Identity: Modern & Professional</h4>
+
+                            <p class="text-slate-600">Sophisticated color palette, legible typography, and authentic photography to convey trust and professionalism.</p>
+
+                        </div>
+
+                         <div class="p-6 bg-slate-100 rounded-lg shadow-sm">
+
+                            <h4 class="font-bold text-xl text-slate-800 mb-2">The User Experience: Intuitive & Responsive</h4>
+
+                            <p class="text-slate-600">Seamless navigation and fluid adaptation to all screen sizes, ensuring consistent optimal experience.</p>
+
+                        </div>
+
+                         <div class="p-6 bg-slate-100 rounded-lg shadow-sm">
+
+                            <h4 class="font-bold text-xl text-slate-800 mb-2">The Strategic Purpose: Conversion-Driven Design</h4>
+
+                            <p class="text-slate-600">Design elements meticulously crafted to guide visitors towards booking appointments.</p>
+
+                        </div>
+
+                        <div class="p-6 bg-slate-100 rounded-lg shadow-sm">
+
+                            <h4 class="font-bold text-xl text-slate-800 mb-2">Enhanced Accessibility: Inclusive Design</h4>
+
+                            <p class="text-slate-600">Prioritizing accessibility with sufficient color contrast, clear fonts, and semantic HTML.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- 4. Projected Impact & ROI -->
+
+                <div id="projected-impact" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">4. Projected Impact & ROI: Quantifying Your Success</h2>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">A strategic revamp translates into tangible business results. We project significant improvements in key performance indicators within 6-12 months post-launch:</p>
+
+                    <div class="chart-container bg-white p-4 rounded-xl shadow-lg border border-slate-200">
+
+                        <canvas id="impactChart"></canvas>
+
+                    </div>
+
+                    <div class="mt-8 max-w-2xl mx-auto text-slate-700">
+
+                        <h3 class="text-xl font-bold text-teal-700 mb-4">Detailed Impact Breakdown:</h3>
+
+                        <ul class="list-disc list-inside space-y-3">
+
+                            <li><strong class="text-slate-800">New Client Leads (+45%):</strong> Increased inquiries and bookings from optimized pages and frictionless process.</li>
+
+                            <li><strong class="text-slate-800">Organic Search Traffic (+60%):</strong> Boosted visibility on search engines through comprehensive SEO.</li>
+
+                            <li><strong class="text-slate-800">User Engagement (+35%):</strong> Longer visits, lower bounce rates, and more page views from enhanced design and interactivity.</li>
+
+                            <li><strong class="text-slate-800">Brand Authority & Trust:</strong> Elevated brand perception from professional design and expert content.</li>
+
+                            <li><strong class="text-slate-800">Reduced Customer Acquisition Cost (CAC):</strong> More organic leads mean less reliance on paid advertising.</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- 5. Methodology & Process -->
+
+                <div id="methodology" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">5. Methodology & Process</h2>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">Our structured, transparent, and collaborative approach ensures a seamless journey from concept to launch:</p>
+
+                    <ol class="list-decimal list-inside text-slate-700 space-y-4 ml-4">
+
+                        <li><strong class="text-slate-800">Discovery & Strategy:</strong> Analysis of current site, market, and defining goals.</li>
+
+                        <li><strong class="text-slate-800">Information Architecture & UX Design:</strong> Developing the "Journey Hub" structure, wireframes, and prototypes.</li>
+
+                        <li><strong class="text-slate-800">Visual Design & Branding Integration:</strong> Crafting modern visuals and custom UI elements.</li>
+
+                        <li><strong class="text-slate-800">Development & Implementation:</strong> Building with HTML5, Tailwind CSS, and Vanilla JS.</li>
+
+                        <li><strong class="text-slate-800">Content Migration & SEO Optimization:</strong> Optimizing existing content and implementing technical SEO.</li>
+
+                        <li><strong class="text-slate-800">Testing, Launch & Post-Launch Support:</strong> Rigorous QA, deployment, and ongoing monitoring.</li>
+
+                    </ol>
+
+                </div>
+
+
+
+                <!-- 6. Project Timeline -->
+
+                <div id="timeline" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">6. Project Timeline (Conceptual)</h2>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">Estimated breakdown of project phases:</p>
+
+                    <div class="grid md:grid-cols-2 gap-6 text-slate-700">
+
+                        <div class="bg-teal-50 p-6 rounded-lg shadow-sm">
+
+                            <h3 class="font-semibold text-xl text-teal-700 mb-2">Phase 1: Discovery & Planning</h3>
+
+                            <p class="text-slate-600 text-sm">Weeks 1-3</p>
+
+                        </div>
+
+                        <div class="bg-teal-50 p-6 rounded-lg shadow-sm">
+
+                            <h3 class="font-semibold text-xl text-teal-700 mb-2">Phase 2: Design & Prototyping</h3>
+
+                            <p class="text-slate-600 text-sm">Weeks 4-8</p>
+
+                        </div>
+
+                        <div class="bg-teal-50 p-6 rounded-lg shadow-sm">
+
+                            <h3 class="font-semibold text-xl text-teal-700 mb-2">Phase 3: Development & Content</h3>
+
+                            <p class="text-slate-600 text-sm">Weeks 9-16</p>
+
+                        </div>
+
+                        <div class="bg-teal-50 p-6 rounded-lg shadow-sm">
+
+                            <h3 class="font-semibold text-xl text-teal-700 mb-2">Phase 4: Testing & Launch</h3>
+
+                            <p class="text-slate-600 text-sm">Weeks 17-20</p>
+
+                        </div>
+
+                    </div>
+
+                    <p class="text-slate-600 mt-8 leading-relaxed">This timeline is an estimate and can be adjusted based on specific features and feedback.</p>
+
+                </div>
+
+
+
+                <!-- 7. Investment Details -->
+
+                <div id="investment" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">7. Investment Details</h2>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">The total development fee for this comprehensive website redesign, as outlined in this proposal, is:</p>
+
+                    <div class="bg-teal-50 p-6 rounded-lg shadow-sm text-center">
+
+                        <h3 class="text-4xl font-bold text-teal-700 mb-3">5,000 AED</h3>
+
+                        <p class="text-slate-600 mb-4">This investment covers all phases of the project, from discovery and design to development, content integration, and initial SEO optimization.</p>
+
+                        <p class="text-slate-600 mt-4">We are confident this offers exceptional value, positioning OneLife HealthCare for significant digital growth and a strong return on this investment.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- 8. About Delhi Digital Co. -->
+
+                <div id="about-us" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">8. About Delhi Digital Co.</h2>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">Delhi Digital Co. is a leading digital agency specializing in crafting innovative and high-performing web solutions. Our team of experts is dedicated to transforming digital visions into tangible success, creating user-centric experiences that deliver measurable business results.</p>
+
+                    <div class="bg-teal-50 p-6 rounded-lg shadow-sm text-center">
+
+                        <h3 class="text-xl font-semibold text-teal-700 mb-3">Our Mission</h3>
+
+                        <p class="text-slate-600">To empower businesses with cutting-edge digital platforms that drive engagement, growth, and lasting impact through collaborative partnerships and transparent processes.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- 9. Next Steps -->
+
+                <div id="next-steps" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12 scroll-mt-20 section-reveal">
+
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-700 mb-6">9. Next Steps</h2>
+
+                    <p class="text-slate-600 mb-8 leading-relaxed">We are excited about the opportunity to partner with OneLife HealthCare. To move forward, we recommend:</p>
+
+                    <div class="flex flex-col md:flex-row gap-6 justify-center">
+
+                        <button class="bg-emerald-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-md hover:bg-emerald-700 transition-colors duration-200">
+
+                            Schedule a Follow-Up Discussion
+
+                        </button>
+
+                        <button class="bg-slate-200 text-slate-800 px-8 py-4 rounded-full text-lg font-semibold shadow-md hover:bg-slate-300 transition-colors duration-200">
+
+                            Confirm Project Commencement
+
+                        </button>
+
+                    </div>
+
+                    <p class="text-slate-600 mt-8 text-center">We look forward to partnering with you on this transformative project.</p>
+
+                </div>
+
+
+
+            </section>
+
+        </div>
+
+
+
+        <footer class="text-center py-8 border-t border-slate-200 mt-16">
+
+            <p class="text-slate-500 text-sm">&copy; 2025 OneLife HealthCare. Proposal by <strong class="text-slate-600">Delhi Digital Co.</strong> All rights reserved.</p>
+
+        </footer>
+
+
+
+    </div>
+
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const navButtons = document.querySelectorAll('.nav-btn');
+
+            const sections = document.querySelectorAll('#proposal-content > div'); // Direct children of proposal-content
+
+
+
+            // Smooth scroll and active state for navigation
+
+            navButtons.forEach(button => {
+
+                button.addEventListener('click', function(event) {
+
+                    event.preventDefault(); // Prevent default anchor jump
+
+                    const targetId = this.getAttribute('href').substring(1); // Get section ID from href
+
+                    const targetSection = document.getElementById(targetId);
+
+
+
+                    if (targetSection) {
+
+                        // Remove active class from all nav buttons
+
+                        navButtons.forEach(btn => btn.classList.remove('nav-active'));
+
+                        // Add active class to the clicked button
+
+                        this.classList.add('nav-active');
+
+
+
+                        // Scroll to the target section with offset for sticky header/padding
+
+                        const offsetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - 80; // Adjust 80px as needed for padding/sticky header
+
+                        window.scrollTo({
+
+                            top: offsetTop,
+
+                            behavior: 'smooth'
+
+                        });
+
+                    }
+
+                });
+
+            });
+
+
+
+            // Intersection Observer for updating active nav button on scroll and section reveal
+
+            const sectionObserverOptions = {
+
+                root: null,
+
+                rootMargin: '-20% 0px -20% 0px', // When section is significantly in view
+
+                threshold: 0.1 // When 10% of the section is visible
+
+            };
+
+
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add('animate-in'); // Add class for fade-in
+
+                        const currentSectionId = entry.target.id;
+
+                        navButtons.forEach(button => {
+
+                            if (button.getAttribute('href') === '#' + currentSectionId) {
+
+                                navButtons.forEach(btn => btn.classList.remove('nav-active'));
+
+                                button.classList.add('nav-active');
+
+                            }
+
+                        });
+
+
+
+                        // Animate SEO funnel steps if it's the proposed-solution section
+
+                        if (currentSectionId === 'proposed-solution') {
+
+                            const seoSteps = document.querySelectorAll('.seo-funnel-step');
+
+                            seoSteps.forEach((step, index) => {
+
+                                setTimeout(() => {
+
+                                    step.classList.add('animate-in');
+
+                                }, index * 200); // Stagger animation
+
+                            });
+
+                        }
+
+                    } else {
+
+                        entry.target.classList.remove('animate-in'); // Remove class when out of view
+
+                        if (entry.target.id === 'proposed-solution') {
+
+                            const seoSteps = document.querySelectorAll('.seo-funnel-step');
+
+                            seoSteps.forEach(step => {
+
+                                step.classList.remove('animate-in');
+
+                            });
+
+                        }
+
+                    }
+
+                });
+
+            }, sectionObserverOptions);
+
+
+
+            sections.forEach(section => {
+
+                sectionObserver.observe(section);
+
+            });
+
+
+
+
+
+            // IV Drip Selector Logic (within Proposed Solution)
+
+            const dripSelector = document.getElementById('drip-selector');
+
+            const selectedDripTitle = document.getElementById('selected-drip-title');
+
+            const selectedDripDescription = document.getElementById('selected-drip-description');
+
+            const dripIngredients = document.getElementById('drip-ingredients');
+
+            const dripBenefits = document.getElementById('drip-benefits');
+
+            const dripPrice = document.getElementById('drip-price');
+
+
+
+            const dripData = {
+
+                immunity: {
+
+                    title: 'Immunity Boost Drip',
+
+                    description: 'Strengthen your body\'s natural defenses and fight off illness with a powerful blend of Vitamin C, Zinc, and B Vitamins.',
+
+                    ingredients: 'Vitamin C, Zinc, B-Complex, Lysine',
+
+                    benefits: 'Boosts immune system, reduces fatigue, enhances energy, aids recovery.',
+
+                    price: 'AED 699'
+
+                },
+
+                'anti-aging': {
+
+                    title: 'NAD+ Anti-Aging Drip',
+
+                    description: 'Rejuvenate at a cellular level, boost energy, and enhance cognitive function with Nicotinamide Adenine Dinucleotide (NAD+).',
+
+                    ingredients: 'NAD+, B-Complex, Vitamin C',
+
+                    benefits: 'Cellular regeneration, increased energy, improved mental clarity, anti-aging effects.',
+
+                    price: 'AED 950 - 1950'
+
+                },
+
+                detox: {
+
+                    title: 'Body Detox Drip',
+
+                    description: 'Cleanse your system and eliminate toxins, leaving you feeling refreshed and revitalized.',
+
+                    ingredients: 'Glutathione, Vitamin C, Magnesium, Selenium',
+
+                    benefits: 'Detoxifies liver, improves skin clarity, boosts energy, supports overall well-being.',
+
+                    price: 'AED 799'
+
+                },
+
+                hangover: {
+
+                    title: 'Hangover Recovery Drip',
+
+                    description: 'Rapidly rehydrate and replenish lost nutrients to quickly alleviate hangover symptoms.',
+
+                    ingredients: 'Saline Solution, B-Complex, Zofran (anti-nausea), Toradol (pain relief)',
+
+                    benefits: 'Fast rehydration, reduces nausea, alleviates headaches and body aches, restores energy.',
+
+                    price: 'AED 899'
+
+                },
+
+                skin: {
+
+                    title: 'Glutathione Skin Whitening',
+
+                    description: 'Achieve a brighter, more even skin tone and powerful antioxidant benefits with high-dose Glutathione.',
+
+                    ingredients: 'Glutathione, Vitamin C, Biotin',
+
+                    benefits: 'Skin brightening, reduces hyperpigmentation, powerful antioxidant, improves skin health.',
+
+                    price: 'AED 499 (injection) / AED 850 (drip)'
+
+                }
+
+            };
+
+
+
+            if (dripSelector) { // Check if element exists before adding listener
+
+                function updateDripDetails() {
+
+                    const selectedDrip = dripSelector.value;
+
+                    const data = dripData[selectedDrip];
+
+                    if (data) {
+
+                        selectedDripTitle.textContent = data.title;
+
+                        selectedDripDescription.textContent = data.description;
+
+                        dripIngredients.textContent = data.ingredients;
+
+                        dripBenefits.textContent = data.benefits;
+
+                        dripPrice.textContent = data.price;
+
+                    }
+
+                }
+
+                dripSelector.addEventListener('change', updateDripDetails);
+
+                updateDripDetails(); // Initial load
+
+            }
+
+
+
+
+
+            // Symptom Checker Logic (within Proposed Solution)
+
+            const symptomSelect = document.getElementById('symptom-select');
+
+            const symptomResponse = document.getElementById('symptom-response');
+
+
+
+            if (symptomSelect) { // Check if element exists
+
+                symptomSelect.addEventListener('change', function() {
+
+                    const selectedSymptom = this.value;
+
+                    let responseText = '';
+
+                    if (selectedSymptom === 'fever') {
+
+                        responseText = 'Our home doctor can provide a thorough examination, diagnosis, and appropriate treatment plan, including prescriptions, right from your home.';
+
+                    } else if (selectedSymptom === 'pain') {
+
+                        responseText = 'For general aches and pains, a home doctor can assess the cause and provide immediate relief or recommend further steps.';
+
+                    } else if (selectedSymptom === 'digestion') {
+
+                        responseText = 'Our doctors can diagnose and manage common digestive issues, offering comfort and treatment without a clinic visit.';
+
+                    } else if (selectedSymptom === 'fatigue') {
+
+                        responseText = 'Persistent fatigue can be assessed by our home doctor, who can recommend tests or treatments, including potential IV therapy.';
+
+                    }
+
+                    symptomResponse.querySelector('p').textContent = responseText;
+
+                    symptomResponse.classList.remove('hidden');
+
+                });
+
+            }
+
+
+
+            // Accordion Logic for Nursing Care (within Proposed Solution)
+
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+
+                header.addEventListener('click', function() {
+
+                    const content = this.nextElementSibling;
+
+                    const icon = this.querySelector('.accordion-icon');
+
+
+
+                    // Close all other open accordions
+
+                    accordionHeaders.forEach(otherHeader => {
+
+                        if (otherHeader !== this) {
+
+                            otherHeader.nextElementSibling.classList.remove('open');
+
+                            otherHeader.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+
+                        }
+
+                    });
+
+
+
+                    // Toggle current accordion
+
+                    content.classList.toggle('open');
+
+                    if (content.classList.contains('open')) {
+
+                        icon.style.transform = 'rotate(180deg)';
+
+                    } else {
+
+                        icon.style.transform = 'rotate(0deg)';
+
+                    }
+
+                });
+
+            });
+
+
+
+            // Theme Preview Logic (within Proposed Solution)
+
+            const themeBtns = document.querySelectorAll('.theme-btn');
+
+            const themePreview = document.getElementById('theme-preview');
+
+
+
+            themeBtns.forEach(btn => {
+
+                btn.addEventListener('click', function() {
+
+                    const theme = this.dataset.theme;
+
+                    let bgColor, textColor, previewText, borderColor;
+
+
+
+                    switch(theme) {
+
+                        case 'teal':
+
+                            bgColor = 'bg-teal-100';
+
+                            textColor = 'text-teal-800';
+
+                            borderColor = 'border-teal-500';
+
+                            previewText = 'This is a preview of the Teal Theme.';
+
+                            break;
+
+                        case 'blue':
+
+                            bgColor = 'bg-blue-100';
+
+                            textColor = 'text-blue-800';
+
+                            borderColor = 'border-blue-500';
+
+                            previewText = 'This is a preview of the Blue Theme.';
+
+                            break;
+
+                        case 'purple':
+
+                            bgColor = 'bg-purple-100';
+
+                            textColor = 'text-purple-800';
+
+                            borderColor = 'border-purple-500';
+
+                            previewText = 'This is a preview of the Purple Theme.';
+
+                            break;
+
+                    }
+
+
+
+                    themePreview.className = `theme-preview ${bgColor} ${textColor} ${borderColor}`;
+
+                    themePreview.querySelector('p').textContent = previewText;
+
+                });
+
+            });
+
+
+
+            // Chart.js for Projected Impact
+
+            const ctx = document.getElementById('impactChart').getContext('2d');
+
+            const impactChart = new Chart(ctx, {
+
+                type: 'bar',
+
+                data: {
+
+                    labels: ['New Client Leads', 'Organic Search Traffic', 'User Engagement', 'Brand Authority', 'CAC Reduction'],
+
+                    datasets: [{
+
+                        label: 'Projected Improvement (%)',
+
+                        data: [45, 60, 35, 50, 20],
+
+                        backgroundColor: [
+
+                            'rgba(13, 148, 136, 0.7)', /* Teal-700 */
+
+                            'rgba(15, 118, 110, 0.7)', /* Darker Teal */
+
+                            'rgba(17, 94, 89, 0.7)',  /* Even Darker Teal */
+
+                            'rgba(20, 184, 166, 0.7)', /* Emerald-500 */
+
+                            'rgba(6, 182, 212, 0.7)' /* Cyan-500 */
+
+                        ],
+
+                        borderColor: [
+
+                            'rgba(13, 148, 136, 1)',
+
+                            'rgba(15, 118, 110, 1)',
+
+                            'rgba(17, 94, 89, 1)',
+
+                            'rgba(20, 184, 166, 1)',
+
+                            'rgba(6, 182, 212, 1)'
+
+                        ],
+
+                        borderWidth: 1,
+
+                        borderRadius: 8
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        },
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label: function(context) {
+
+                                    let label = context.dataset.label || '';
+
+                                    if (label) {
+
+                                        label += ': ';
+
+                                    }
+
+                                    if (context.parsed.y !== null) {
+
+                                        label += '+' + context.parsed.y + '%';
+
+                                    }
+
+                                    return label;
+
+                                }
+
+                            },
+
+                            backgroundColor: 'rgba(51, 65, 85, 0.9)', /* Slate-700 */
+
+                            titleColor: '#f8fafc', /* Slate-50 */
+
+                            bodyColor: '#f8fafc', /* Slate-50 */
+
+                            padding: 10,
+
+                            displayColors: false
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            title: {
+
+                                display: true,
+
+                                text: 'Projected Improvement (%)',
+
+                                color: '#475569' /* Slate-600 */
+
+                            },
+
+                            ticks: {
+
+                                color: '#64748b' /* Slate-500 */
+
+                            },
+
+                            grid: {
+
+                                color: '#e2e8f0' /* Slate-200 */
+
+                            }
+
+                        },
+
+                        x: {
+
+                            title: {
+
+                                display: false
+
+                            },
+
+                            ticks: {
+
+                                color: '#64748b', /* Slate-500 */
+
+                                maxRotation: 0,
+
+                                minRotation: 0,
+
+                                callback: function(value, index, values) {
+
+                                    const label = this.getLabelForValue(value);
+
+                                    if (label.length > 16) {
+
+                                        return label.split(' ').map((word, i) => {
+
+                                            if (i === 0) return word;
+
+                                            return word.length > 16 ? word.slice(0, 15) + '...' : word;
+
+                                        });
+
+                                    }
+
+                                    return label;
+
+                                }
+
+                            },
+
+                            grid: {
+
+                                display: false
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+
+
+</body>
+
+</html>
+
+
+
+
+
